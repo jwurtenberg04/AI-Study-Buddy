@@ -12,7 +12,7 @@ ReactDOM.createRoot(root).render(
   <Router>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/" element={<HomePage />} />
+      <Route path="/HomePage" element={<HomePage />} />
     </Routes>
   </Router>
 );

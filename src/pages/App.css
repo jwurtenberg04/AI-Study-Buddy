@@ -1,11 +1,11 @@
 .sign-in-box {
-  border: 2px solid black;  /* Adds a black border */
-  padding: 50px;            /* Adds spacing inside the box */
-  width: 300px;             /* Adjust the width */
-  margin: 10px auto;        /* Centers the box */
-  background-color: white;  /* Background color */
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Adds a shadow */
-  text-align: center;       /* Centers the text */
+  border: 2px solid black;  
+  padding: 50px;
+  width: 300px;             
+  margin: 10px auto;       
+  background-color: white; 
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;       
 
 }
 .sign-in {
