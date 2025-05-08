@@ -14,7 +14,7 @@
     margin-bottom: 0.5rem;
   }
   
-  .insights, .transactions {
+  .topics, .recent {
     background: white;
     padding: 1.5rem;
     border-radius: 12px;
@@ -22,17 +22,17 @@
     margin-bottom: 2rem;
   }
   
-  .insights ul {
+  .topics ul {
     padding-left: 1.2rem;
   }
   
-  .transactions table {
+  .recent table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
   }
   
-  .transactions th, .transactions td {
+  .recent th, .recent td {
     text-align: left;
     padding: 0.5rem;
     border-bottom: 1px solid #ddd;

@@ -4,20 +4,19 @@ import './HomePage.css';
 export default function HomePage() {
   const [userName, setUserName] = useState("Alex");
   const [balance, setBalance] = useState(3250.75);
-  const [insights, setInsights] = useState([]);
-  const [transactions, setTransactions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [recent, setRecent] = useState([]);
 
   useEffect(() => {
 
-    setInsights([
-      "Your grocery spending increased by 18% this month.",
-      "You can save $200/month by cutting unused subscriptions.",
+    setSuggestions([
+      "How to cook a chicken alfredo",
+      "Music theory 101",
     ]);
 
-    setTransactions([
-      { date: "2025-05-05", description: "Starbucks", amount: -5.45 },
-      { date: "2025-05-04", description: "Netflix", amount: -15.99 },
-      { date: "2025-05-03", description: "Paycheck", amount: 1500.00 },
+    setRecent([
+      { date: "2025-05-05", topic: "Basics of Cooking", link: "www.randompage.com" },
+      { date: "2025-05-04", topic: "Piano for Beginner", link: "www.randompage.com" },
     ]);
   }, []);
 
@@ -28,33 +27,31 @@ export default function HomePage() {
         <p>Your current balance is <strong>${balance.toFixed(2)}</strong></p>
       </header>
 
-      <section className="insights">
-        <h2>AI Insights</h2>
+      <section className="topics">
+        <h2>Topics you might like</h2>
         <ul>
-          {insights.map((item, index) => (
-            <li key={index}>• {item}</li>
+          {suggestions.map((item, index) => (
+            <li key={index}> {item}</li>
           ))}
         </ul>
       </section>
 
-      <section className="transactions">
-        <h2>💸 Recent Transactions</h2>
+      <section className="recent">
+        <h2>Recent Discussions</h2>
         <table>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Description</th>
-              <th>Amount</th>
+              <th>Topic</th>
+              <th>Link to chat</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((tx, index) => (
+            {recent.map((tx, index) => (
               <tr key={index}>
                 <td>{tx.date}</td>
-                <td>{tx.description}</td>
-                <td className={tx.amount < 0 ? 'negative' : 'positive'}>
-                  ${tx.amount.toFixed(2)}
-                </td>
+                <td>{tx.topic}</td>
+                <td>{tx.link}</td>
               </tr>
             ))}
           </tbody>
