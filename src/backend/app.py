@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import db, pastDiscussions
 from datetime import datetime
+from ollama import generate
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +26,7 @@ def add_article():
         )
         db.session.add(new_article)
         db.session.commit()
-        return jsonify({'message': 'Article added successfully', 'id': new_article.id}), 201
+        return jsonify({'message': 'Article added successfully', 'topic': new_article.topic}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
@@ -40,6 +41,21 @@ def get_articles():
         } for article in articles
     ]
     return jsonify(result), 200
+
+@app.route('/ollama', methods=['POST'])
+def chat_bot():
+    try:
+        data = request.get_json()
+        input_text = data.get('input')
+        response = generate('gemma3:1b', input_text)
+        print("Input text:", input_text)
+        print("Generated response:", response)
+        print(response.response)
+        return response.response
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({'error': 'Something went wrong'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,29 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.css';
+import axios from 'axios';
 
 export default function HomePage() {
   const [userName, setUserName] = useState("Alex");
   const [suggestions, setSuggestions] = useState([]);
   const [recent, setRecent] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+
+  const handleSend= async () => {
+    if (!input.trim()) return;
+
+    const userMessage = { sender: 'user', text: input };
+    setMessages(prev => [...prev, userMessage]);
+
+    try {
+      const res = await axios.post('http://localhost:5000/ollama', {
+      input: input  
+      });
+      console.log(res);
+      const botMessage = { sender: 'bot', text: res.data };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (err) {
+      console.error('Chatbot error:', err);
+    }
+
+    setInput('');
+  };
 
   useEffect(() => {
-
+    
     setSuggestions([
       "How to cook a chicken alfredo",
       "Music theory 101",
     ]);
+    
+    //to retrieve the history 
 
-    setRecent([
-      { date: "2025-05-05", topic: "Basics of Cooking", link: "www.randompage.com" },
-      { date: "2025-05-04", topic: "Piano for Beginner", link: "www.randompage.com" },
-    ]);
+    axios.get('http://localhost:5000/pastDiscussions')
+      .then(response => setRecent(response.data))
+      .catch(error => console.error('Error fetching items:', error));
+    
   }, []);
 
   return (
     <div className="home-container">
       <header className="home-header">
         <h1>Welcome back, {userName} 👋</h1>
-        <p>Your current balance is <strong>${balance.toFixed(2)}</strong></p>
       </header>
 
       <section className="topics">
@@ -34,6 +58,29 @@ export default function HomePage() {
           ))}
         </ul>
       </section>
+
+      <div className="chat-container">
+        <div className="chat-window">
+          {messages.map((msg, index) => (
+            <div key={index} className={msg.sender === 'user' ? 'user-msg' : 'bot-msg'}>
+              <b>{msg.sender === 'user' ? 'You' : 'Bot'}:</b> {msg.text}
+            </div>
+          ))}
+        </div>
+
+        <div className="input-row">
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder="Type your message..."
+            className="chat-input"
+            onKeyDown={e => e.key === 'Enter' && handleSend()}
+          />
+          <button onClick={handleSend} className="chat-button">Send</button>
+        </div>
+      </div>
+
 
       <section className="recent">
         <h2>Recent Discussions</h2>

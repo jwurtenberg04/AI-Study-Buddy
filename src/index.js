@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './pages/App';
+import App from './frontend/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes, Link, BrowserRouter } from "react-router-dom";
-import HomePage from './pages/HomePage';
+import HomePage from './frontend/HomePage';
 
 
 const root = document.getElementById("root")

@@ -46,3 +46,45 @@
     color: red;
   }
   
+  .chat-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: sans-serif;
+}
+
+.chat-window {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+  background: #f9f9f9;
+}
+
+.input-row {
+  display: flex;
+  margin-top: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.chat-button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.user-msg {
+  text-align: right;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.bot-msg {
+  text-align: left;
+  margin-bottom: 10px;
+  color: #28a745;
+}
