@@ -3,25 +3,22 @@ import './HomePage.css';
 import axios from 'axios';
 
 export default function HomePage() {
-  const [userName, setUserName] = useState("Alex");
+  const [userName, setUserName] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [recent, setRecent] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [response, setResponse] = useState('');
   const [input, setInput] = useState('');
 
   const handleSend= async () => {
     if (!input.trim()) return;
 
-    const userMessage = { sender: 'user', text: input };
-    setMessages(prev => [...prev, userMessage]);
 
     try {
       const res = await axios.post('http://localhost:5000/ollama', {
       input: input  
       });
-      console.log(res);
       const botMessage = { sender: 'bot', text: res.data };
-      setMessages(prev => [...prev, botMessage]);
+      setResponse(botMessage);
     } catch (err) {
       console.error('Chatbot error:', err);
     }
@@ -36,7 +33,7 @@ export default function HomePage() {
       "Music theory 101",
     ]);
     
-    //to retrieve the history 
+  
 
     axios.get('http://localhost:5000/pastDiscussions')
       .then(response => setRecent(response.data))
@@ -59,28 +56,25 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <div className="chat-container">
-        <div className="chat-window">
-          {messages.map((msg, index) => (
-            <div key={index} className={msg.sender === 'user' ? 'user-msg' : 'bot-msg'}>
-              <b>{msg.sender === 'user' ? 'You' : 'Bot'}:</b> {msg.text}
-            </div>
-          ))}
-        </div>
 
-        <div className="input-row">
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder="Type your message..."
-            className="chat-input"
-            onKeyDown={e => e.key === 'Enter' && handleSend()}
-          />
-          <button onClick={handleSend} className="chat-button">Send</button>
-        </div>
+      <div className="input-row">
+        <input
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="Type your message..."
+          className="chat-input"
+          onKeyDown={e => e.key === 'Enter' && handleSend()}
+        />
+        <button onClick={handleSend} className="chat-button">Send</button>
       </div>
-
+      
+      {response && response.text && (
+      <div>
+        <h2>Step by step:</h2>
+        <p>{response.text}</p>
+      </div>
+      )}
 
       <section className="recent">
         <h2>Recent Discussions</h2>

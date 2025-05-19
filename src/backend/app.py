@@ -47,10 +47,8 @@ def chat_bot():
     try:
         data = request.get_json()
         input_text = data.get('input')
-        response = generate('gemma3:1b', input_text)
-        print("Input text:", input_text)
-        print("Generated response:", response)
-        print(response.response)
+        response = generate('gemma3:1b', "Give me a step-by-step guide to learn " + input_text + ". Split it into week by week without labeling any sub steps or anything. Keep it rather broad for each week.")
+        print(response)
         return response.response
     except Exception as e:
         print("Error:", e)
